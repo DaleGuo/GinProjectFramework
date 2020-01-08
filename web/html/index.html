@@ -9,6 +9,7 @@
 <link rel="stylesheet" href="../static/lib/bootstrap.min.css">
 
 <body>
+<h3>权限测试</h3>
 <div class="btn-group" role="group" aria-label="Basic example">
     <button type="button" class="btn btn-secondary" onclick="get1()">Get resource1</button>
     <button type="button" class="btn btn-secondary" onclick="post1()">Post resource1</button>
@@ -16,7 +17,8 @@
     <button type="button" class="btn btn-secondary" onclick="post2()">Post resource2</button>
 </div>
 
-
+<br/><br/>
+<h3>用户权限表</h3>
 <table class="table">
     <thead class="thead-light">
     <tr>
@@ -43,6 +45,12 @@
     </tr>
     </tbody>
 </table>
+
+<br/><br/>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" onclick="signOut()">退出</button>
+</div>
+
 </body>
 
 <script type="text/javascript" src="../static/lib/jquery-3.4.1.min.js"></script>
@@ -90,6 +98,15 @@
                         alert(result.message);
                     } else {
                         alert(result.message)
+                    }
+                });
+    }
+    
+    function signOut() {
+        $.post("/ginFrameWork/signOut", {},
+                function (result) {
+                    if (result.status === 0) {
+                        window.location.href = '/ginFrameWork/login';
                     }
                 });
     }

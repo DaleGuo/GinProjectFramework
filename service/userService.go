@@ -5,7 +5,7 @@ import (
 	"github.com/gin-contrib/sessions"
 )
 
-//返回登录结果和信息
+//用户登录
 func SignIn(userName string, password string,session sessions.Session) (bool,string) {
 	result:=db.Authen(userName,password)
 	if !result{
@@ -18,4 +18,14 @@ func SignIn(userName string, password string,session sessions.Session) (bool,str
 	session.Save()
 
 	return true,"登录成功"
+}
+
+//用户退出
+func SignOut(session sessions.Session) (bool,string) {
+	//将用户登录信息从session删除
+	session.Set("hasSignIn", "")
+	session.Set("role", "")
+	session.Save()
+
+	return true,"退出成功"
 }

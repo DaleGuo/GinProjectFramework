@@ -38,7 +38,9 @@ func Route() error {
 	{
 		webRouter.GET("/login", controller.LoginHtml)
 		webRouter.GET("/index", controller.IndexHtml)
+
 		webRouter.POST("/signIn", controller.SignIn)
+		webRouter.POST("/signOut", controller.SignOut)
 
 		webRouter.GET("/resource1", controller.GetResource1)
 		webRouter.POST("/resource1", controller.PostResource1)

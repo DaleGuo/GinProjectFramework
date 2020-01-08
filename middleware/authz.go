@@ -11,8 +11,8 @@ import (
 //鉴权
 func AuthzMiddleWare(e *casbin.Enforcer) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		//登录功能跳过验证
-		if url := c.Request.URL.String(); strings.HasPrefix(url,"/ginFrameWork/login") || strings.HasPrefix(url,"/ginFrameWork/signIn"){
+		//登录页面和登录、退出操作跳过验证
+		if url := c.Request.URL.String(); strings.HasPrefix(url,"/ginFrameWork/login") || strings.HasPrefix(url,"/ginFrameWork/signIn") || strings.HasPrefix(url,"/ginFrameWork/signOut"){
 			c.Next()
 			return
 		}

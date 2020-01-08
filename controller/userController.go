@@ -18,6 +18,7 @@ type signInStruct struct {
 func SignIn(c *gin.Context)  {
 	s, _ := ioutil.ReadAll(c.Request.Body)
 
+	//参数验证
 	var data signInStruct
 	err:=json.Unmarshal(s,&data)
 	if err != nil{
@@ -29,6 +30,22 @@ func SignIn(c *gin.Context)  {
 	}
 
 	result,message:=service.SignIn(data.UserName,data.Password,sessions.Default(c))
+	if result {
+		c.JSON(http.StatusOK,gin.H{
+			"status":0,
+			"message":message,
+		})
+	}else{
+		c.JSON(http.StatusOK,gin.H{
+			"status":1,
+			"message":message,
+		})
+	}
+}
+
+//退出
+func SignOut(c *gin.Context)  {
+	result,message:=service.SignOut(sessions.Default(c))
 	if result {
 		c.JSON(http.StatusOK,gin.H{
 			"status":0,
