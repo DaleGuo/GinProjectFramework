@@ -100,9 +100,9 @@ func AuthenMiddleWare() gin.HandlerFunc {
 ```
 
 
-# casbin权限鉴定配置
+# 权限鉴定
 
-1.  Access Control Model
+**Casbin Access Control Model**
 
 定义在/config/authz_model.conf中，配置匹配规则
 ```
@@ -119,7 +119,7 @@ e = some(where (p.eft == allow))
 m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)
 ```
 
-2.  Policy
+**Casbin Policy**
 
 定义在mysql的casbin_rule表中，设置用户权限
 
@@ -138,7 +138,7 @@ m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)
 
 关于model和policy请参照[casbin](https://github.com/casbin/casbin)官方文档
 
-3.  权限鉴定中间件
+**权限鉴定中间件**
 
 ```
 import _ "github.com/go-sql-driver/mysql" //一定要import
