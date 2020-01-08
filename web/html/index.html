@@ -4,12 +4,94 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Gin Framework</title>
     <meta charset="GB2312">
+    <link rel="icon" href="data:;base64,=">
 </head>
+<link rel="stylesheet" href="../static/lib/bootstrap.min.css">
 
 <body>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" onclick="get1()">Get resource1</button>
+    <button type="button" class="btn btn-secondary" onclick="post1()">Post resource1</button>
+    <button type="button" class="btn btn-secondary" onclick="get2()">Get resource2</button>
+    <button type="button" class="btn btn-secondary" onclick="post2()">Post resource2</button>
+</div>
 
+
+<table class="table">
+    <thead class="thead-light">
+    <tr>
+        <th scope="col">role</th>
+        <th scope="col">resorce1</th>
+        <th scope="col">resorce2</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <th scope="row">admin</th>
+        <td>(GET)|(POST)</td>
+        <td>(GET)|(POST)</td>
+    </tr>
+    <tr>
+        <th scope="row">professor</th>
+        <td>(GET)</td>
+        <td>(GET)|(POST)</td>
+    </tr>
+    <tr>
+        <th scope="row">student</th>
+        <td>(GET)</td>
+        <td>(GET)</td>
+    </tr>
+    </tbody>
+</table>
 </body>
 
-<script type="text/javascript" src="../static/js/index.js"></script>
+<script type="text/javascript" src="../static/lib/jquery-3.4.1.min.js"></script>
+<script type="text/javascript" src="../static/lib/bootstrap.min.js"></script>
 <script type="text/javascript" src="../static/js/websocket.js"></script>
+
+<script>
+    function get1() {
+        $.get("/ginFrameWork/resource1", {},
+                function (result) {
+                    if (result.status === 0) {
+                        alert(result.message);
+                    } else {
+                        alert(result.message)
+                    }
+                });
+    }
+
+    function post1() {
+        $.post("/ginFrameWork/resource1", {},
+                function (result) {
+                    if (result.status === 0) {
+                        alert(result.message);
+                    } else {
+                        alert(result.message)
+                    }
+                });
+    }
+
+    function get2() {
+        $.get("/ginFrameWork/resource2", {},
+                function (result) {
+                    if (result.status === 0) {
+                        alert(result.message);
+                    } else {
+                        alert(result.message)
+                    }
+                });
+    }
+
+    function post2() {
+        $.post("/ginFrameWork/resource2", {},
+                function (result) {
+                    if (result.status === 0) {
+                        alert(result.message);
+                    } else {
+                        alert(result.message)
+                    }
+                });
+    }
+</script>
 </html>

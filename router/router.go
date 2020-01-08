@@ -7,10 +7,10 @@ import (
 	"log"
 	"github.com/gin-contrib/sessions"
 	"github.com/gin-contrib/sessions/cookie"
-	"github.com/casbin/casbin"
 	"GinProjectFramework/middleware"
-	"github.com/casbin/gorm-adapter"
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/casbin/gorm-adapter"
+	"github.com/casbin/casbin"
 )
 
 func Route() error {
@@ -40,6 +40,10 @@ func Route() error {
 		webRouter.GET("/index", controller.IndexHtml)
 		webRouter.POST("/signIn", controller.SignIn)
 
+		webRouter.GET("/resource1", controller.GetResource1)
+		webRouter.POST("/resource1", controller.PostResource1)
+		webRouter.GET("/resource2", controller.GetResource2)
+		webRouter.POST("/resource2", controller.PostResource2)
 		//todo：其它路由
 	}
 
