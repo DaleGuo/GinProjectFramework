@@ -1,6 +1,6 @@
 # Go Web项目实践技术框架
 
-**采用gin+gorm+mysql+casbin+nats+websocket**
+**采用gin+gorm+mysql+casbin+nats(optional)+websocket(optional)**
 
 # 第三方开源库
 1. [Gin](https://github.com/gin-gonic/gin)：HTTP web framework.
