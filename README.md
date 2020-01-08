@@ -2,16 +2,6 @@
 
 **采用gin+gorm+mysql+casbin+nats(optional)+websocket(optional)**
 
-# 第三方开源库
-1. [Gin](https://github.com/gin-gonic/gin)：HTTP web framework.
-2. [gin-contrib-sessions](https://github.com/gin-contrib/sessions):Gin middleware for session management
-3. [gorm](https://github.com/jinzhu/gorm)：The fantastic ORM(Object Relational Mapping）library for Golang, aims to be developer friendlylibrary.
-4. [casbin](https://github.com/jinzhu/gorm)：An authorization library that supports access control models like ACL, RBAC, ABAC in Golang.
-5. [nats](https://github.com/nats-io/nats.go)：Golang client for NATS, the cloud native messaging system.
-6. [gorilla-websocket](https://github.com/gorilla/websocket):A fast, well-tested and widely used WebSocket implementation for Go.
-7. [go-ini](https://github.com/go-ini/ini):Package ini provides INI file read and write functionality in Go.
-8. [go.uuid](https://github.com/satori/go.uuid):UUID package for Go.
-
 # 项目目录
     |--config //配置相关
     |	|--authz_model.conf //casbin鉴权模型配置
@@ -50,6 +40,66 @@
     |--main.go //主程序
     |--ginFrameWork.sql //测试数据库脚本
     
+# 启动web服务
+```
+gin.SetMode(gin.DebugMode)
+router := gin.Default()
+router.Static("../static", "./web/static")                             //静态资源
+router.LoadHTMLFiles("./web/html/login.html", "./web/html/index.html") //静态页面
+webRouter := router.Group("/ginFrameWork")
+{
+	webRouter.GET("/login", controller.LoginHtml)
+	webRouter.GET("/index", controller.IndexHtml)
+	webRouter.POST("/signIn", controller.SignIn)
+	webRouter.POST("/signOut", controller.SignOut)
+	webRouter.GET("/resource1", controller.GetResource1)
+	webRouter.POST("/resource1", controller.PostResource1)
+	webRouter.GET("/resource2", controller.GetResource2)
+	webRouter.POST("/resource2", controller.PostResource2)
+	//todo：其它路由
+}
+router.Run(port)
+```
+
+# session
+```
+store := cookie.NewStore([]byte("secret"))
+router.Use(sessions.Sessions("mysession", store))
+```
+
+# 登录认证
+```
+router.Use(middleware.AuthenMiddleWare())
+
+//认证中间件
+func AuthenMiddleWare() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		if session := sessions.Default(c); session.Get("hasSignIn") == "true" {
+			c.Next()
+			return
+		}
+
+		//登录页面和登录、退出操作跳过验证
+		if url := c.Request.URL.String(); strings.HasPrefix(url, "/ginFrameWork/login") || strings.HasPrefix(url, "/ginFrameWork/signIn") || strings.HasPrefix(url, "/ginFrameWork/signOut") {
+			c.Next()
+			return
+		}
+
+		//静态资源文件跳过验证
+		url := c.Request.URL.RequestURI()
+		if strings.HasPrefix(url,"/static"){
+			c.Next()
+			return
+		}
+
+		c.HTML(http.StatusOK,"login.html",gin.H{"status":1,"message": "用户未登录"})
+		c.Abort()
+		return
+	}
+}
+```
+
+
 # casbin权限鉴定配置
 
 1.  Access Control Model
@@ -88,6 +138,51 @@ m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)
 
 关于model和policy请参照[casbin](https://github.com/casbin/casbin)官方文档
 
+3.  权限鉴定中间件
+
+```
+import _ "github.com/go-sql-driver/mysql" //一定要import
+
+policyUrl,err:=global.GetAccessPolicyUrl()
+a := gormadapter.NewAdapter("mysql",policyUrl, true)
+e := casbin.NewEnforcer("./config/authz_model.conf", a)
+e.LoadPolicy()//从DB加载策略
+router.Use(middleware.AuthzMiddleWare(e))
+
+//鉴权中间件
+func AuthzMiddleWare(e *casbin.Enforcer) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		//登录页面和登录、退出操作跳过验证
+		if url := c.Request.URL.String(); strings.HasPrefix(url,"/ginFrameWork/login") || strings.HasPrefix(url,"/ginFrameWork/signIn") || strings.HasPrefix(url,"/ginFrameWork/signOut"){
+			c.Next()
+			return
+		}
+
+		//获取请求的URI
+		obj := c.Request.URL.RequestURI()
+		//获取请求方法
+		act := c.Request.Method
+		//获取用户的角色
+		sub := sessions.Default(c).Get("role")
+
+		//静态资源文件跳过验证
+		if strings.HasPrefix(obj,"/static"){
+			c.Next()
+			return
+		}
+
+		//判断策略中是否存在
+		if e.Enforce(sub, obj, act) {
+			c.Next()
+		} else {
+			c.JSON(http.StatusOK, gin.H{"status":1,"message": "用户无权限"})
+			c.Abort()
+		}
+	}
+}
+```
+
+
 # 部署并测试
 1.  安装go环境
 2.  下载工程，对缺少的第三方库使用`go get`获取，例如`go get github.com/gin-gonic/gin`
@@ -101,3 +196,13 @@ m = r.sub == p.sub && keyMatch(r.obj, p.obj) && regexMatch(r.act, p.act)
 | admin | admin | admin |
 | professor | professor | professor |
 | student | student | student |
+
+# 第三方开源库
+1. [Gin](https://github.com/gin-gonic/gin)：HTTP web framework.
+2. [gin-contrib-sessions](https://github.com/gin-contrib/sessions):Gin middleware for session management
+3. [gorm](https://github.com/jinzhu/gorm)：The fantastic ORM(Object Relational Mapping）library for Golang, aims to be developer friendlylibrary.
+4. [casbin](https://github.com/jinzhu/gorm)：An authorization library that supports access control models like ACL, RBAC, ABAC in Golang.
+5. [nats](https://github.com/nats-io/nats.go)：Golang client for NATS, the cloud native messaging system.
+6. [gorilla-websocket](https://github.com/gorilla/websocket):A fast, well-tested and widely used WebSocket implementation for Go.
+7. [go-ini](https://github.com/go-ini/ini):Package ini provides INI file read and write functionality in Go.
+8. [go.uuid](https://github.com/satori/go.uuid):UUID package for Go.
