@@ -66,7 +66,7 @@ func GetDBConnectUrl() (string,error) {
 	user := section.Key("user").String()
 	password := section.Key("password").String()
 	address := section.Key("address").String()
-	tableName := section.Key("tableName").String()
+	tableName := section.Key("dbName").String()
 
 	url:=fmt.Sprintf("%s:%s@(%s)/%s?charset=utf8&parseTime=True&loc=Local",user,password,address,tableName)
 	return url,nil
