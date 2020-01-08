@@ -39,6 +39,26 @@
     |	|	|--lib
     |--main.go //主程序
     |--ginFrameWork.sql //测试数据库脚本
+
+# 项目配置
+```
+[webRoute]
+port = :8081
+
+[mysql]
+user = root
+password = adm123
+address = 127.0.0.1:3306
+dbName = ginFramework
+
+[webSocket]
+url = /processEdit
+port = :8082
+
+[Nats]
+url = nats://localhost:4222
+topic = natsTopic
+```
     
 # 启动web服务
 ```
