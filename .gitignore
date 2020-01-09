@@ -1,3 +1,7 @@
 #idea project file
 .idea/
 *.exe
+
+# govendor
+vendor/*
+!vendor/vendor.json
