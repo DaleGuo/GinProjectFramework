@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 50720
 File Encoding         : 65001
 
-Date: 2020-01-08 18:26:16
+Date: 2020-01-09 19:44:43
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -20,26 +20,27 @@ SET FOREIGN_KEY_CHECKS=0;
 -- ----------------------------
 DROP TABLE IF EXISTS `casbin_rule`;
 CREATE TABLE `casbin_rule` (
-  `p_type` varchar(255) NOT NULL,
-  `v0` varchar(255) DEFAULT NULL,
-  `v1` varchar(255) DEFAULT NULL,
-  `v2` varchar(255) DEFAULT NULL,
-  `v3` varchar(255) DEFAULT NULL,
-  `v4` varchar(255) DEFAULT NULL,
-  `v5` varchar(255) DEFAULT NULL
+  `p_type` varchar(100) DEFAULT NULL,
+  `v0` varchar(100) DEFAULT NULL,
+  `v1` varchar(100) DEFAULT NULL,
+  `v2` varchar(100) DEFAULT NULL,
+  `v3` varchar(100) DEFAULT NULL,
+  `v4` varchar(100) DEFAULT NULL,
+  `v5` varchar(100) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Records of casbin_rule
 -- ----------------------------
-INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/resource1', 'GET', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/resource1', 'GET', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'admin', '/ginFrameWork/*', '(GET)|(POST)', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/resource2', 'GET', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/resource2', '(GET)|(POST)', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/index', 'GET', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'admin', '/ginFrameWork/index', 'GET', null, null, null);
-INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/index', 'GET', null, null, null);
+INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/resource1', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/resource1', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'admin', '/ginFrameWork/*', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/resource2', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/resource2', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'student', '/ginFrameWork/index', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'admin', '/ginFrameWork/*', 'POST', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/index', 'GET', '', '', '');
+INSERT INTO `casbin_rule` VALUES ('p', 'professor', '/ginFrameWork/resource2', 'POST', '', '', '');
 
 -- ----------------------------
 -- Table structure for users
