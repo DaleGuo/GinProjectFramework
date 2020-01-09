@@ -31,6 +31,8 @@
     |	|--userService.go //用户对象相关服务
     |--util //工具类
     |	|--unique.go //唯一标识生成
+    |--vendor
+    |   |--vendor.json//项目依赖包配置
     |--web
     |	|--html
     |	|--static
@@ -200,6 +202,15 @@ func AuthzMiddleWare(e *casbin.Enforcer) gin.HandlerFunc {
 		}
 	}
 }
+```
+
+**修改权限**
+```
+Enforcer.AddPolicy("student","/ginFrameWork/resource1","POST")//sub,obj,act
+Enforcer.SavePolicy()
+
+Enforcer.RemovePolicy("student","/ginFrameWork/resource1","POST")//sub,obj,act
+Enforcer.SavePolicy()
 ```
 
 
