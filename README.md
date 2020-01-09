@@ -204,8 +204,9 @@ func AuthzMiddleWare(e *casbin.Enforcer) gin.HandlerFunc {
 
 
 # 部署并测试
-1.  安装go环境
-2.  下载工程，对缺少的第三方库使用`go get`获取，例如`go get github.com/gin-gonic/gin`
+1.  安装go 1.8环境
+2.  安装包管理工具govendor `go get -u -v github.com/kardianos/govendor`
+3.  进入ginFrameWork目录,输入`govendor sync`下载依赖包
 3.  修改config/serverConfig.ini配置信息
 4.  mysql执行ginFrameWork.sql脚本文件
 5.  运行访问http://localhost:8081/ginFrameWork/login
