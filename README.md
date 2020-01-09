@@ -32,7 +32,7 @@
     |--util //工具类
     |	|--unique.go //唯一标识生成
     |--vendor
-    |   |--vendor.json//项目依赖包配置
+    |       |--vendor.json//项目依赖包配置
     |--web
     |	|--html
     |	|--static
@@ -205,6 +205,8 @@ func AuthzMiddleWare(e *casbin.Enforcer) gin.HandlerFunc {
 ```
 
 **修改权限**
+
+[API官方文档](https://github.com/casbin/gorm-adapter)
 ```
 Enforcer.AddPolicy("student","/ginFrameWork/resource1","POST")//sub,obj,act
 Enforcer.SavePolicy()
@@ -234,7 +236,8 @@ Enforcer.SavePolicy()
 2. [gin-contrib-sessions](https://github.com/gin-contrib/sessions):Gin middleware for session management
 3. [gorm](https://github.com/jinzhu/gorm)：The fantastic ORM(Object Relational Mapping）library for Golang, aims to be developer friendlylibrary.
 4. [casbin](https://github.com/jinzhu/gorm)：An authorization library that supports access control models like ACL, RBAC, ABAC in Golang.
-5. [nats](https://github.com/nats-io/nats.go)：Golang client for NATS, the cloud native messaging system.
-6. [gorilla-websocket](https://github.com/gorilla/websocket):A fast, well-tested and widely used WebSocket implementation for Go.
-7. [go-ini](https://github.com/go-ini/ini):Package ini provides INI file read and write functionality in Go.
-8. [go.uuid](https://github.com/satori/go.uuid):UUID package for Go.
+5. [casbin-gorm-adapter](https://github.com/casbin/gorm-adapter)：Gorm adapter for Casbin.
+6. [nats](https://github.com/nats-io/nats.go)：Golang client for NATS, the cloud native messaging system.
+7. [gorilla-websocket](https://github.com/gorilla/websocket):A fast, well-tested and widely used WebSocket implementation for Go.
+8. [go-ini](https://github.com/go-ini/ini):Package ini provides INI file read and write functionality in Go.
+9. [go.uuid](https://github.com/satori/go.uuid):UUID package for Go.
