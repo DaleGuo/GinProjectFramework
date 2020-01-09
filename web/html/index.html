@@ -18,7 +18,15 @@
 </div>
 
 <br/><br/>
-<h3>用户权限表</h3>
+
+<h3>student用户权限修改(只有admin拥有修改权限)</h3>
+<div class="btn-group" role="group" aria-label="Basic example">
+    <button type="button" class="btn btn-secondary" onclick="enableAccess()">Enable to POST resource1</button>
+    <button type="button" class="btn btn-secondary" onclick="disableAccess()">Disable to POST resource1</button>
+</div>
+
+<br/><br/>
+<h3>初始用户权限表</h3>
 <table class="table">
     <thead class="thead-light">
     <tr>
@@ -108,6 +116,20 @@
                     if (result.status === 0) {
                         window.location.href = '/ginFrameWork/login';
                     }
+                });
+    }
+
+    function enableAccess() {
+        $.post("/ginFrameWork/enableStudentPOSTResource1", {},
+                function (result) {
+                    alert(result.message);
+                });
+    }
+
+    function disableAccess() {
+        $.post("/ginFrameWork/disableStudentPOSTResource1", {},
+                function (result) {
+                    alert(result.message)
                 });
     }
 </script>

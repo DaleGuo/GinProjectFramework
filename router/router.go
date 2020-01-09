@@ -11,6 +11,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/casbin/gorm-adapter"
 	"github.com/casbin/casbin"
+	"GinProjectFramework/service"
 )
 
 func Route() error {
@@ -28,6 +29,7 @@ func Route() error {
 	policyUrl,err:=global.GetAccessPolicyUrl()
 	a := gormadapter.NewAdapter("mysql",policyUrl, true)
 	e := casbin.NewEnforcer("./config/authz_model.conf", a)
+	service.Enforcer = e
 	e.LoadPolicy()//从DB加载策略
 	router.Use(middleware.AuthzMiddleWare(e))
 
@@ -46,6 +48,9 @@ func Route() error {
 		webRouter.POST("/resource1", controller.PostResource1)
 		webRouter.GET("/resource2", controller.GetResource2)
 		webRouter.POST("/resource2", controller.PostResource2)
+
+		webRouter.POST("/enableStudentPOSTResource1", controller.EnablePostResource1)
+		webRouter.POST("/disableStudentPOSTResource1", controller.DisablePostResource1)
 		//todo：其它路由
 	}
 
