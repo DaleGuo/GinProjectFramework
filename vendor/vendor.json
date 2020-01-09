@@ -171,10 +171,12 @@
 			"revisionTime": "2017-11-07T05:05:31Z"
 		},
 		{
-			"checksumSHA1": "6CXWlMkex7tiedL3wtFEMBJcG1I=",
+			"checksumSHA1": "h/Sw4tcm9DmKwiYTGDM/+Wye4lA=",
 			"path": "github.com/nats-io/go-nats",
-			"revision": "c528ff487513eec69347b5598eb35d91f0a63820",
-			"revisionTime": "2019-03-25T09:40:32Z"
+			"revision": "29f9728a183bf3fa7e809e14edac00b33be72088",
+			"revisionTime": "2017-08-08T18:59:33Z",
+			"version": "v1.3.0",
+			"versionExact": "v1.3.0"
 		},
 		{
 			"checksumSHA1": "Q2c9uTEIGhSIddv5pntYdFNtUdk=",
